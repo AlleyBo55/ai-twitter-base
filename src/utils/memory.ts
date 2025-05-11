@@ -1,7 +1,7 @@
 import { db } from '../lib/mongodb';
 import { pineconeIndex } from '../lib/pinecone-client';
 import { getEmbedding } from '../lib/openai-embedding';
-import { formatDateIndo } from '../helpers/dateFormatter';
+import { formatDate } from '../helpers/dateFormatter';
 import type { MemoryEntry } from '../types/memory';
 
 const longTermCollection = db.collection<MemoryEntry>('long_term_memory');
@@ -67,7 +67,7 @@ export async function updateSessionMessages(username: string, newMessages: any[]
       $set: {
         messages: updatedMessages,
         lastActive: now,
-        lastActiveFormatted: formatDateIndo(now),
+        lastActiveFormatted: formatDate(now),
       },
     },
     { upsert: true }
@@ -104,7 +104,7 @@ export async function addOrUpdateLongTermMemory(
   const now = new Date();
   const normalized = normalizeQuery(query);
   const { intent, topic, tone } = classifyContext(query); // Include tone
-  const formatted = formatDateIndo(now);
+  const formatted = formatDate(now);
 
   await longTermCollection.updateOne(
     { query: normalized },
