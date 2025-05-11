@@ -5,7 +5,7 @@ import { postTweet, initTwitterSession, hasTweet, storeTweet } from '../actions/
 import { db } from '../lib/mongodb';
 import { pineconeIndex } from '../lib/pinecone-client';
 import { getEmbedding } from '../lib/openai-embedding';
-import { formatDateIndo } from '../helpers/dateFormatter';
+import { formatDate } from '../helpers/dateFormatter';
 import usernames from '../target/unamelist.json';
 import path from 'path';
 // Path to store logs
@@ -227,7 +227,7 @@ async function scrapeTrendingTweets(page: Page, topic: string): Promise<{ userna
         intent: 'summary',
         topic,
         date: now.toISOString().split('T')[0],
-        createdAt: formatDateIndo(now),
+        createdAt: formatDate(now),
         cachedAt: now.toISOString(),
       };
 

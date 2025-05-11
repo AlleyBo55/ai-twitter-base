@@ -7,7 +7,7 @@ import { hasTweet, storeTweet, postTweet } from '../actions/actionWithApi';
 import { db } from '../lib/mongodb';
 import { pineconeIndex } from '../lib/pinecone-client';
 import { getEmbedding } from '../lib/openai-embedding';
-import { formatDateIndo } from '../helpers/dateFormatter';
+import { formatDate } from '../helpers/dateFormatter';
 import usernames from '../target/unamelist.json';
 import { MemoryEntry } from '../types/memory';
 import { TwitterAuthHandler } from '../auth/twitterSession';
@@ -447,7 +447,7 @@ async function postRandomTweet(username: string): Promise<string | null> {
       intent: 'statement',
       topic: 'random',
       date: cachedAt.toISOString().split('T')[0],
-      createdAt: formatDateIndo(cachedAt),
+      createdAt: formatDate(cachedAt),
       cachedAt: cachedAt.toISOString(),
     };
     await pineconeIndex.upsert([{
